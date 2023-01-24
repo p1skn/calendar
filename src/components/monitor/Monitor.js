@@ -1,53 +1,52 @@
-import React from 'react';
+import dayjs from 'dayjs';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import GlobalContext from '../../context/GlobalContext';
 
 const MonitorWrapper = styled.div`
-    border-radius: 20px;
-    background-color: #6e6e6e;
-    width: 95%;
-    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    color: gray;
 `;
 
 const Date = styled.div`
-    margin-left: 20px;
     display: flex;
     flex-direction: row;
-    color: white;
-    min-width: 200px;
     justify-content: space-between;
     align-items: center;
+    margin: 10px;
+    width: 300px;
 `;
 
 const Buttons = styled.div`
-    margin-right: 20px;
+    width: 150px;
+    justify-content: flex-start;
 `;
 
 const Button = styled.button`
+    cursor: pointer;
     margin: 5px;
     padding: 3px 7px;
-    border: 2px solid white;
+    border: 2px solid gray;
     border-radius: 50px;
-    background-color: #6e6e6e;
+    background-color: white;
     font-weight: 700;
-    color: white;
-    cursor: pointer;
+    color: gray;
 `;
 
 const Monitor = (props) => {
+    const { monthIndex, setMonthIndex } = useContext(GlobalContext);
     return (
         <MonitorWrapper>
             <Date>
-                <h1>{props.year}</h1>
-                <h2>{props.month}</h2>
+                <h1>{dayjs(new window.Date(dayjs().year(), monthIndex)).format("YYYY MMMM")}</h1>
             </Date>
             <Buttons>
-                <Button onClick={props.fun2}>&lt;</Button>
-                <Button onClick={props.today}>Today</Button>
-                <Button onClick={props.fun1}>&gt;</Button>
+                <Button onClick={() => { setMonthIndex(monthIndex - 1) }}>&lt;</Button>
+                <Button onClick={() => { setMonthIndex(monthIndex) }}>Today</Button>
+                <Button onClick={() => { setMonthIndex(monthIndex + 1) }}>&gt;</Button>
             </Buttons>
         </MonitorWrapper>
     );

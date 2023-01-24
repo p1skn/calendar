@@ -1,64 +1,58 @@
 import React from 'react';
 import Day from '../day/Day';
 import styled from 'styled-components';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const GridWrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    min-width: 700px;
+    background-color: gray;
     gap: 2px;
-    max-width: 700px;
+    border: 2px solid gray;
 `;
 
 const DaysWrapper = styled.div`
-    cursor: pointer;
-    margin: 10px;
+    padding: 5px;
+    min-height: 100px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background-color: ${props => props.isWeekend ?  `#a1a1a1` : `#bbbbbb`};
-    border-radius: 50%;
-    color: white;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-weight: 700;
+    color: gray;
+    background-color: white;
 `;
 
 const CurrentDay = styled(DaysWrapper)`
-    margin: 0;
-    background-color: red;
+    min-height: 30px;
+    border-radius: 50%;
 
+    border: 2px solid gray;
 `;
 
-const WeekWrapper = styled(DaysWrapper)`
-    background-color: #6e6e6e;
+const WeekWrapper = styled.div`
+    width: 100%;
+    border-bottom: 2px solid gray;
 `;
 
-const isCurrentDay = (day) => moment().isSame(day, 'day');
+const Daysgrid = ({ currentMonth }) => {
+    const isCurrentDay = (day) => { return (dayjs().format("YY-MM-DD") === day.format("YY-MM-DD")); }
 
-
-const Daysgrid = ({days, week}) => {
-    return (
-        <GridWrapper>
-            {week.map( (day, i) => 
-            <WeekWrapper key={i}>
-                    {day}
-            </WeekWrapper>
-            )}
-            {days.map( (day, i) =>
-                <DaysWrapper 
-                key={i}
-                isWeekend={day.day() === 6 || day.day() === 0}
-                >
-                    {isCurrentDay(day) 
-                    ? 
-                    <CurrentDay ><Day days={day.format("D")}/></CurrentDay>
-                    : 
-                    <Day days={day.format("D")}/>
-                    }
-                </DaysWrapper>
-            )}
-        </GridWrapper>
-    );
+return (
+    <GridWrapper>
+        {currentMonth.map((row, i) => (
+            <React.Fragment key={i}>
+                {row.map((day, index) => (
+                    <DaysWrapper key={index + 10}>
+                        {i === 0 ? <WeekWrapper>{day.format("ddd")}</WeekWrapper> : <div></div>}
+                        {isCurrentDay(day) ? <CurrentDay><Day days={day.format("D")}/></CurrentDay> : <Day days={day.format("D")} />}
+                    </DaysWrapper>
+                ))}
+            </React.Fragment>
+        ))}
+    </GridWrapper>
+);
 };
 
 export default Daysgrid;
