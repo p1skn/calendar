@@ -20,14 +20,6 @@ const MainWrapper = styled.div`
   position: relative;
 `;
 
-const Test = styled.div`
-  background-color: black;
-  min-width: 700px;
-  max-width: 700px;
-  position: absolute;
-  z-index: 100;
-`;
-
 function App() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex } = useContext(GlobalContext);

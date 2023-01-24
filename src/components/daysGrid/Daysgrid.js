@@ -37,7 +37,7 @@ const WeekWrapper = styled.div`
 `;
 
 const Daysgrid = ({ currentMonth }) => {
-    const isCurrentDay = (day) => { return (dayjs().format("YY-MM-DD") === day.format("YY-MM-DD")); }
+const isCurrentDay = (day) => { return (dayjs().format("YY-MM-DD") === day.format("YY-MM-DD")); }
 
 return (
     <GridWrapper>
